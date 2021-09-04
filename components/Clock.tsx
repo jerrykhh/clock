@@ -11,27 +11,30 @@ const Clock = (props: Props) => {
         return (props.options.timeZone === undefined) ?
             new Date()
             :
-            new Date(new Date().toLocaleString((props.locales !== undefined) ? props.locales : "en-US", props.options));
+            new Date(new Date().toLocaleString((typeof props.locales !== undefined) ? props.locales : "en-US", props.options));
     });
 
     useEffect(() => {
+        
         // componentDidMount
-        const updateTimer = setTimeout(() => {
+        updateDateTime()
+        const updateTimer = setInterval(() => {
             updateDateTime();
         }, 1000);
         // componentDidMount
 
         // componentWillUnmount
         return (() => {
-            clearTimeout(updateTimer);
+            clearInterval(updateTimer);
         });
         // componentWillUnmount
-    })
+    }, [])
 
     const updateDateTime = (): void => {
+
         (props.options.timeZone === undefined) ?
             setDateTime(new Date()) :
-            setDateTime(new Date(new Date().toLocaleString((props.locales !== undefined) ? props.locales : "en-US", props.options)));
+            setDateTime(new Date(new Date().toLocaleString((typeof props.locales !== undefined) ? props.locales : "en-US", props.options)));
     }
 
     const padZero = (num: number, maxLength: number): string => {
@@ -63,14 +66,14 @@ const Clock = (props: Props) => {
 
     return (
         <div className="grid-cols-3 flex relative">
-            <div className="relative bg-black p-3">
-                <span className="relative sm:p-0 text-white font-bold text-5xl">{getTime().hour}</span>
+            <div className="relative bg-black p-3 w-18">
+                <span className="relative sm:p-0 text-white font-bold text-8xl">{getTime().hour}</span>
             </div>
-            <div className="relative bg-black p-3 ml-0">
-                <span className="relative sm:p-0 text-white font-bold text-5xl">{getTime().minute}</span>
+            <div className="relative bg-black p-3 ml-0 w-18">
+                <span className="relative sm:p-0 text-white font-bold text-8xl">{getTime().minute}</span>
             </div>
-            <div className="relative bg-black p-3">
-                <div className=" sm:p-0 text-white text-xl">{getTime().second}</div>
+            <div className="relative bg-black p-3 ">
+                <div className=" sm:p-0 text-white text-3xl w-10">{getTime().second}</div>
             </div>
         </div>
     )

@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .self-center-p8{
+        @apply p-8 self-center
+    }
+}
